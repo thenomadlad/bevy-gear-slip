@@ -67,12 +67,12 @@ jobs:
                       package_ext: .zip
                       runner: ubuntu-latest
 
-                    - platform: windows
-                      targets: x86_64-pc-windows-msvc
-                      profile: release-native
-                      binary_ext: .exe
-                      package_ext: .zip
-                      runner: windows-latest
+                    # - platform: windows
+                    #   targets: x86_64-pc-windows-msvc
+                    #   profile: release-native
+                    #   binary_ext: .exe
+                    #   package_ext: .zip
+                    #   runner: windows-latest
 
                     - platform: macos
                       targets: x86_64-apple-darwin aarch64-apple-darwin
@@ -92,9 +92,6 @@ jobs:
                   if [ '${{ matrix.platform }}' == 'macos' ]; then
                     echo 'MACOSX_DEPLOYMENT_TARGET=11.0' >> "${GITHUB_ENV}" # MacOS 11.0 Big Sur is the first version to support universal binaries.
                     echo "SDKROOT=$(xcrun --sdk macosx --show-sdk-path)" >> "${GITHUB_ENV}"
-                  fi
-                  if [ '${{ matrix.platform }}' == 'windows' ]; then
-                    git config --global core.protectNTFS false
                   fi
 
             - name: Checkout repository

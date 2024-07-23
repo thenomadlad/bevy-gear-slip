@@ -6,6 +6,7 @@ mod animation;
 pub mod assets;
 pub mod audio;
 mod movement;
+mod rotational_movement;
 pub mod spawn;
 
 pub(super) fn plugin(app: &mut App) {
@@ -14,6 +15,7 @@ pub(super) fn plugin(app: &mut App) {
         audio::plugin,
         assets::plugin,
         movement::plugin,
+        rotational_movement::plugin,
         spawn::plugin,
     ));
 }

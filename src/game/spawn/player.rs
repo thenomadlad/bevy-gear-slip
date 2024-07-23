@@ -6,7 +6,7 @@ use crate::{
     game::{
         animation::PlayerAnimation,
         assets::{HandleMap, ImageKey},
-        movement::{Movement, MovementController, WrapWithinWindow},
+        movement::{ConstrainWithinWindow, Movement, MovementController},
     },
     screen::Screen,
 };
@@ -33,7 +33,8 @@ fn spawn_player(
     // By attaching it to a [`SpriteBundle`] and providing an index, we can specify which section of the image we want to see.
     // We will use this to animate our player character. You can learn more about texture atlases in this example:
     // https://github.com/bevyengine/bevy/blob/latest/examples/2d/texture_atlas.rs
-    let layout = TextureAtlasLayout::from_grid(UVec2::splat(32), 6, 2, Some(UVec2::splat(1)), None);
+    let layout =
+        TextureAtlasLayout::from_grid(UVec2::splat(300), 6, 2, Some(UVec2::splat(1)), None);
     let texture_atlas_layout = texture_atlas_layouts.add(layout);
     let player_animation = PlayerAnimation::new();
 
@@ -41,8 +42,7 @@ fn spawn_player(
         Name::new("Player"),
         Player,
         SpriteBundle {
-            texture: image_handles[&ImageKey::Ducky].clone_weak(),
-            transform: Transform::from_scale(Vec2::splat(8.0).extend(1.0)),
+            texture: image_handles[&ImageKey::Sootboi].clone_weak(),
             ..Default::default()
         },
         TextureAtlas {
@@ -51,7 +51,7 @@ fn spawn_player(
         },
         MovementController::default(),
         Movement { speed: 420.0 },
-        WrapWithinWindow,
+        ConstrainWithinWindow,
         player_animation,
         StateScoped(Screen::Playing),
     ));

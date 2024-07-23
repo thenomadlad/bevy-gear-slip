@@ -16,10 +16,10 @@ pub(super) fn plugin(app: &mut App) {
     );
 
     // Apply movement based on controls.
-    app.register_type::<(Movement, WrapWithinWindow)>();
+    app.register_type::<(Movement, WrapWithinWindow, ConstrainWithinWindow)>();
     app.add_systems(
         Update,
-        (apply_movement, wrap_within_window)
+        (apply_movement, wrap_within_window, constrain_within_window)
             .chain()
             .in_set(AppSet::Update),
     );
@@ -92,5 +92,22 @@ fn wrap_within_window(
         let position = transform.translation.xy();
         let wrapped = (position + half_size).rem_euclid(size) - half_size;
         transform.translation = wrapped.extend(transform.translation.z);
+    }
+}
+
+#[derive(Component, Reflect)]
+#[reflect(Component)]
+pub struct ConstrainWithinWindow;
+
+fn constrain_within_window(
+    window_query: Query<&Window, With<PrimaryWindow>>,
+    mut wrap_query: Query<&mut Transform, With<ConstrainWithinWindow>>,
+) {
+    let max_size = window_query.single().size() - 256.0;
+    let min_size = -1.0 * max_size;
+    for mut transform in &mut wrap_query {
+        let position = transform.translation.xy().max(min_size).min(max_size);
+        transform.translation = position.extend(transform.translation.z);
+        println!("{}", transform.translation);
     }
 }

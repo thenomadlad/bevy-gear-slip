@@ -119,18 +119,34 @@ pub trait Containers {
     /// Spawns a root node that covers the full screen
     /// and centers its content horizontally and vertically.
     fn ui_root(&mut self) -> EntityCommands;
+
+    /// Spawns a root node that covers the full screen
+    /// and centers its content as specified
+    fn ui_root_with_alignment(
+        &mut self,
+        justify: JustifyContent,
+        align: AlignItems,
+    ) -> EntityCommands;
 }
 
 impl Containers for Commands<'_, '_> {
     fn ui_root(&mut self) -> EntityCommands {
+        self.ui_root_with_alignment(JustifyContent::Center, AlignItems::Center)
+    }
+
+    fn ui_root_with_alignment(
+        &mut self,
+        justify: JustifyContent,
+        align: AlignItems,
+    ) -> EntityCommands {
         self.spawn((
             Name::new("UI Root"),
             NodeBundle {
                 style: Style {
                     width: Percent(100.0),
                     height: Percent(100.0),
-                    justify_content: JustifyContent::Center,
-                    align_items: AlignItems::Center,
+                    justify_content: justify,
+                    align_items: align,
                     flex_direction: FlexDirection::Column,
                     row_gap: Px(10.0),
                     position_type: PositionType::Absolute,

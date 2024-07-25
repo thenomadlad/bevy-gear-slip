@@ -8,6 +8,7 @@ pub mod audio;
 mod movement;
 mod rotational_movement;
 pub mod spawn;
+pub mod ui;
 
 pub(super) fn plugin(app: &mut App) {
     app.add_plugins((
@@ -17,5 +18,6 @@ pub(super) fn plugin(app: &mut App) {
         movement::plugin,
         rotational_movement::plugin,
         spawn::plugin,
+        ui::plugin,
     ));
 }

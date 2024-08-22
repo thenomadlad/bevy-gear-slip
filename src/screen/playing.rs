@@ -3,14 +3,17 @@
 use bevy::{input::common_conditions::input_just_pressed, prelude::*};
 
 use super::Screen;
-use crate::game::{
-    assets::SoundtrackKey, audio::soundtrack::PlaySoundtrack, spawn::level::SpawnLevel,
+use crate::ui::prelude::*;
+use crate::{
+    game::{assets::SoundtrackKey, audio::soundtrack::PlaySoundtrack, spawn::level::SpawnLevel},
+    screen::GameButtonAction,
 };
 
 pub(super) fn plugin(app: &mut App) {
     app.add_systems(OnEnter(Screen::Playing), enter_playing);
     app.add_systems(OnExit(Screen::Playing), exit_playing);
 
+    app.register_type::<GameButtonAction>();
     app.add_systems(
         Update,
         return_to_title_screen
@@ -21,6 +24,18 @@ pub(super) fn plugin(app: &mut App) {
 fn enter_playing(mut commands: Commands) {
     commands.trigger(SpawnLevel);
     commands.trigger(PlaySoundtrack::Key(SoundtrackKey::Gameplay));
+
+    commands
+        .ui_root_with_alignment(JustifyContent::End, AlignItems::End)
+        .insert(StateScoped(Screen::Playing))
+        .with_children(|children| {
+            children
+                .button("<<")
+                .insert(GameButtonAction::DecreaseSpeed);
+            children
+                .button(">>")
+                .insert(GameButtonAction::IncreaseSpeed);
+        });
 }
 
 fn exit_playing(mut commands: Commands) {

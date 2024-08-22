@@ -5,10 +5,10 @@ use bevy::prelude::*;
 mod animation;
 pub mod assets;
 pub mod audio;
+pub mod gear_jump;
 mod movement;
 mod rotational_movement;
 pub mod spawn;
-pub mod ui;
 
 pub(super) fn plugin(app: &mut App) {
     app.add_plugins((
@@ -18,6 +18,6 @@ pub(super) fn plugin(app: &mut App) {
         movement::plugin,
         rotational_movement::plugin,
         spawn::plugin,
-        ui::plugin,
+        gear_jump::plugin,
     ));
 }

@@ -31,3 +31,10 @@ pub enum Screen {
     Credits,
     Playing,
 }
+
+#[derive(Component, Debug, Clone, Copy, PartialEq, Eq, Reflect)]
+#[reflect(Component)]
+pub enum GameButtonAction {
+    IncreaseSpeed,
+    DecreaseSpeed,
+}

@@ -37,3 +37,8 @@ fn detect_collision_move(
         }
     }
 }
+
+fn handle_button_press(
+    mut angular_velocity: ResMut<AngularVelocity>,
+    mut button_query: InteractionQuery<&GameButtonAction>,
+) {

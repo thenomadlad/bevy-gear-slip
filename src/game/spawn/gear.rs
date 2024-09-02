@@ -20,6 +20,7 @@ pub struct SpawnGear {
     pub position: Vec2,
     pub initial_gear_step: bool,
     pub direction: RotationDirection,
+    pub color: Color,
 }
 
 #[derive(Component, Debug, Clone, Copy, PartialEq, Eq, Default, Reflect)]
@@ -54,6 +55,10 @@ fn spawn_gear(
         SpriteBundle {
             texture,
             transform,
+            sprite: Sprite {
+                color: gear.color,
+                ..Default::default()
+            },
             ..Default::default()
         },
         GearBoundingBox(bounding_box),

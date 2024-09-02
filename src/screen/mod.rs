@@ -37,4 +37,5 @@ pub enum Screen {
 pub enum GameButtonAction {
     IncreaseSpeed,
     DecreaseSpeed,
+    Jump,
 }

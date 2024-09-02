@@ -187,6 +187,7 @@ fn handle_increase_velocity(
                     MIN_ANGULAR_VELOCITY,
                     angular_velocity.0 / ANGULAR_VELOCITY_STEP,
                 ),
+                _ => angular_velocity.0,
             }
         }
     }

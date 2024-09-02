@@ -35,6 +35,7 @@ fn enter_playing(mut commands: Commands) {
             children
                 .button(">>")
                 .insert(GameButtonAction::IncreaseSpeed);
+            children.button("Jump (SPC)").insert(GameButtonAction::Jump);
         });
 }
 

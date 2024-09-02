@@ -8,6 +8,8 @@ use crate::{
             player::Player,
         },
     },
+    screen::GameButtonAction,
+    ui::interaction::InteractionQuery,
     AppSet,
 };
 
@@ -16,7 +18,7 @@ pub fn plugin(app: &mut App) {
         Update,
         detect_collision_move
             .in_set(AppSet::Update)
-            .run_if(input_just_pressed(KeyCode::Space)),
+            .run_if(input_just_pressed(KeyCode::Space).or_else(run_if_interaction_query)),
     );
 }
 
@@ -38,7 +40,14 @@ fn detect_collision_move(
     }
 }
 
-fn handle_button_press(
-    mut angular_velocity: ResMut<AngularVelocity>,
-    mut button_query: InteractionQuery<&GameButtonAction>,
-) {
+fn run_if_interaction_query(mut button_query: InteractionQuery<&GameButtonAction>) -> bool {
+    for (interaction, action) in &mut button_query {
+        if matches!(interaction, Interaction::Pressed) {
+            if let GameButtonAction::Jump = action {
+                return true;
+            }
+        }
+    }
+
+    false
+}

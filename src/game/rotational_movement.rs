@@ -42,7 +42,7 @@ pub enum RotationDirection {
 }
 
 impl RotationDirection {
-    fn to_angular_velocity(&self) -> f32 {
+    fn angular_velocity(&self) -> f32 {
         DEFAULT_GEAR_ROTATION.to_radians()
             * match self {
                 RotationDirection::Clockwise => -1.0,
@@ -69,7 +69,7 @@ pub struct RotationalMovement {
 impl RotationalMovement {
     pub fn new(direction: RotationDirection, include_initial_step: bool) -> RotationalMovement {
         RotationalMovement {
-            angular_velocity: direction.to_angular_velocity(),
+            angular_velocity: direction.angular_velocity(),
             direction,
             include_initial_step,
         }
@@ -104,7 +104,7 @@ impl RevolutionMovement {
     ) -> Self {
         Self {
             anchor,
-            angular_velocity: rotation_direction.to_angular_velocity(),
+            angular_velocity: rotation_direction.angular_velocity(),
             rotation_direction,
             revolution_radius,
             current_rotation: if initial_gear_step {
